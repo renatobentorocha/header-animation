@@ -10,19 +10,40 @@ import Radio from './Radio';
 import Bell from './Bell';
 
 const { height, width } = Dimensions.get('screen');
-const MX = width / 2;
+
 const MY = height - 80;
 
-const CURVE_WIDTH = 100;
-const dCurve = `M ${MX - CURVE_WIDTH / 2},${MY} Q ${MX},${MY + 100} ${
-  MX + CURVE_WIDTH / 2
-},${MY}`;
+function c(
+  x1: number,
+  y1: number,
+  x2: number,
+  y2: number,
+  x: number,
+  y: number
+) {
+  const _x1 = x1 * width;
+  const _y1 = y1 * height;
+  const _x2 = x2 * width;
+  const _y2 = y2 * height;
+  const _x = x * width;
+  const _y = y * height;
 
-const dLeft = `M 0,${MY} L ${MX - CURVE_WIDTH / 2},${MY}`;
-const dRight = `H ${width}`;
-const dDown = `V ${height}`;
-const dBottom = `H ${0}`;
-const dUp = `V ${MY}`;
+  return `C${_x1},${_y1} ${_x2},${_y2} ${_x},${_y} `;
+}
+
+const d = `
+    M0 ${height * 0.06}
+    H${width * 0.34}
+    ${c(0.36, 0.06, 0.38, 0.069, 0.39, 0.081)}
+    ${c(0.41, 0.098, 0.43, 0.12, 0.45, 0.128)}
+    ${c(0.47, 0.134, 0.52, 0.143, 0.56, 0.124)}
+    ${c(0.578, 0.117, 0.597, 0.0952, 0.611, 0.0791)}
+    ${c(0.619, 0.0677, 0.639, 0.06, 0.662, 0.06)}
+    H${width}
+    V${0.179 * height}
+    H0
+    V ${height * 0.06}
+    Z`;
 
 export default function App() {
   return (
@@ -31,14 +52,16 @@ export default function App() {
         <Discover />
       </View>
 
-      <Svg>
-        <Path
-          fill="white"
-          stroke="white"
-          strokeWidth={1}
-          d={dLeft + dCurve + dRight + dDown + dBottom + dUp}
-        />
+      <Svg
+        style={{
+          transform: [
+            { translateY: height - (height * 0.119 + height * 0.06) },
+          ],
+        }}
+      >
+        <Path fill="white" stroke="none" d={d} />
       </Svg>
+
       <View style={styles.bottom_bar}>
         <View style={styles.box_bottom_bar}>
           <View>
