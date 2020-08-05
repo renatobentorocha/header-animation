@@ -11,7 +11,7 @@ import Bell from './Bell';
 
 const { height, width } = Dimensions.get('screen');
 
-const MY = height - 80;
+const MY = height - (height * 0.119);
 
 function c(
   x1: number,
@@ -65,19 +65,19 @@ export default function App() {
       <View style={styles.bottom_bar}>
         <View style={styles.box_bottom_bar}>
           <View>
-            <Home />
+            <Home barHeight={styles.bottom_bar.height} barWidth={styles.bottom_bar.width}/>
           </View>
           <View>
-            <TV />
+            <TV barHeight={styles.bottom_bar.height} barWidth={styles.bottom_bar.width}/>
           </View>
         </View>
 
         <View style={styles.box_bottom_bar}>
           <View>
-            <Radio />
+            <Radio barHeight={styles.bottom_bar.height} barWidth={styles.bottom_bar.width} />
           </View>
           <View>
-            <Bell />
+            <Bell barHeight={styles.bottom_bar.height} barWidth={styles.bottom_bar.width}/>
           </View>
         </View>
       </View>
@@ -95,12 +95,12 @@ const styles = StyleSheet.create({
   },
   rounded_button: {
     backgroundColor: '#3E2AD1',
-    height: 62,
-    width: 62,
-    borderRadius: 31,
+    height: width * 0.165,
+    width: width * 0.165,
+    borderRadius: width * 0.165 / 2,
     position: 'absolute',
-    top: MY - 31,
-    left: width / 2 - 31,
+    top: MY - width * 0.165 / 2,
+    left: width / 2 - width * 0.165 / 2,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -108,9 +108,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
     position: 'absolute',
     bottom: 0,
-    height: 80,
+    height: height * 0.119,
     backgroundColor: 'transparent',
-    width: '100%',
+    width: width,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

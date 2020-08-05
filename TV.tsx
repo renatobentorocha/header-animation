@@ -9,6 +9,13 @@ const xml = `
   </svg>
 `;
 
-const Discover = () => <SvgXml xml={xml} />;
+type Props = {
+  barHeight: number;
+  barWidth: number;
+};
+
+const Discover = ({ barHeight, barWidth }: Props) => (
+  <SvgXml xml={xml} width={barHeight * 0.3135} height={barWidth * 0.25} />
+);
 
 export default Discover;

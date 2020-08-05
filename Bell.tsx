@@ -8,9 +8,15 @@ const xml = `
   fill="#0F1E36" fill-opacity="0.5" />
 <ellipse cx="16.5" cy="4.58536" rx="3.5" ry="3.58536" fill="#F51E38" stroke="#F5F5F5" />
 </svg>
-
 `;
 
-const Discover = () => <SvgXml xml={xml} />;
+type Props = {
+  barHeight: number;
+  barWidth: number;
+};
+
+const Discover = ({ barHeight, barWidth }: Props) => (
+  <SvgXml xml={xml} width={barHeight * 0.2625} height={barWidth * 0.325} />
+);
 
 export default Discover;

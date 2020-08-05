@@ -7,6 +7,13 @@ const xml = `
   </svg>
 `;
 
-const Home = () => <SvgXml xml={xml} />;
+type Props = {
+  barHeight: number;
+  barWidth: number;
+};
+
+const Home = ({ barHeight, barWidth }: Props) => (
+  <SvgXml xml={xml} width={barHeight * 0.3135} height={barWidth * 0.2625} />
+);
 
 export default Home;
