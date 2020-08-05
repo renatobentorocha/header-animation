@@ -3,6 +3,7 @@ import React from 'react';
 import { StyleSheet, Dimensions, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 
+import Trending from './components/Trending';
 import Discover from './Discover';
 import Home from './Home';
 import TV from './TV';
@@ -11,7 +12,7 @@ import Bell from './Bell';
 
 const { height, width } = Dimensions.get('screen');
 
-const MY = height - (height * 0.119);
+const MY = height - height * 0.119;
 
 function c(
   x1: number,
@@ -48,9 +49,7 @@ const d = `
 export default function App() {
   return (
     <View style={styles.container}>
-      <View style={styles.rounded_button}>
-        <Discover />
-      </View>
+      <Trending />
 
       <Svg
         style={{
@@ -65,23 +64,40 @@ export default function App() {
       <View style={styles.bottom_bar}>
         <View style={styles.box_bottom_bar}>
           <View>
-            <Home barHeight={styles.bottom_bar.height} barWidth={styles.bottom_bar.width}/>
+            <Home
+              barHeight={styles.bottom_bar.height}
+              barWidth={styles.bottom_bar.width}
+            />
           </View>
           <View>
-            <TV barHeight={styles.bottom_bar.height} barWidth={styles.bottom_bar.width}/>
+            <TV
+              barHeight={styles.bottom_bar.height}
+              barWidth={styles.bottom_bar.width}
+            />
           </View>
         </View>
 
         <View style={styles.box_bottom_bar}>
           <View>
-            <Radio barHeight={styles.bottom_bar.height} barWidth={styles.bottom_bar.width} />
+            <Radio
+              barHeight={styles.bottom_bar.height}
+              barWidth={styles.bottom_bar.width}
+            />
           </View>
           <View>
-            <Bell barHeight={styles.bottom_bar.height} barWidth={styles.bottom_bar.width}/>
+            <Bell
+              barHeight={styles.bottom_bar.height}
+              barWidth={styles.bottom_bar.width}
+            />
           </View>
         </View>
       </View>
-      <StatusBar style="auto" />
+
+      <View style={styles.rounded_button}>
+        <Discover />
+      </View>
+
+      <StatusBar style="light" />
     </View>
   );
 }
@@ -97,10 +113,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#3E2AD1',
     height: width * 0.165,
     width: width * 0.165,
-    borderRadius: width * 0.165 / 2,
+    borderRadius: (width * 0.165) / 2,
     position: 'absolute',
-    top: MY - width * 0.165 / 2,
-    left: width / 2 - width * 0.165 / 2,
+    top: MY - (width * 0.165) / 2,
+    left: width / 2 - (width * 0.165) / 2,
     alignItems: 'center',
     justifyContent: 'center',
   },
