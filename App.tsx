@@ -9,6 +9,7 @@ import Home from './Home';
 import TV from './TV';
 import Radio from './Radio';
 import Bell from './Bell';
+import FeaturedTrackList from './components/FeaturedTrackList';
 
 const { height, width } = Dimensions.get('screen');
 
@@ -50,6 +51,10 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Trending />
+
+      <View style={styles.featured_track_list}>
+        <FeaturedTrackList />
+      </View>
 
       <Svg
         style={{
@@ -108,6 +113,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#F4F9FF',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  featured_track_list: {
+    position: 'absolute',
+    top: height * 0.460269865067466,
+    marginTop: height * 0.03082,
+    marginLeft: width * 0.1066,
   },
   rounded_button: {
     backgroundColor: '#3E2AD1',

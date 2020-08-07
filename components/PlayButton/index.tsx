@@ -4,6 +4,19 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const { height, width } = Dimensions.get('window');
 
+const PlayButton: React.FC = () => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.play_text}>PLAY</Text>
+      <MaterialCommunityIcons
+        name="play-outline"
+        size={height * 0.0224887}
+        color="#E6152B"
+      />
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
@@ -18,17 +31,5 @@ const styles = StyleSheet.create({
     fontSize: height * 0.01499,
   },
 });
-const PlayButton: React.FC = () => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.play_text}>PLAY</Text>
-      <MaterialCommunityIcons
-        name="play-outline"
-        size={height * 0.0224887}
-        color="#E6152B"
-      />
-    </View>
-  );
-};
 
 export default PlayButton;
