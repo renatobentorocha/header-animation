@@ -1,3 +1,5 @@
+import { PixelRatio } from 'react-native';
+
 type sizeProps = {
   origin_size: number;
   destination_size: number;
@@ -5,5 +7,7 @@ type sizeProps = {
 };
 
 export const scale = ({ origin_size, destination_size, size }: sizeProps) => {
-  return (size / origin_size) * destination_size;
+  return PixelRatio.roundToNearestPixel(
+    (size / origin_size) * destination_size
+  );
 };

@@ -1,13 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import {
-  StyleSheet,
-  Dimensions,
-  View,
-  ScrollView,
-  FlatList,
-} from 'react-native';
+import { StyleSheet, Dimensions, View, FlatList } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
+
+import * as utils from './utils';
 
 import Trending from './components/Trending';
 import Discover from './Discover';
@@ -61,10 +57,19 @@ export default function App() {
       <Trending />
 
       <FlatList
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          paddingVertical: utils.scale({
+            origin_size: 887,
+            destination_size: height,
+            size: 36,
+          }),
+        }}
         style={styles.featured_track_list}
         data={DATA}
         renderItem={({ item }) => item()}
         keyExtractor={(_, index) => `${index}`}
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
       />
 
       <Svg
@@ -128,8 +133,20 @@ const styles = StyleSheet.create({
   featured_track_list: {
     position: 'absolute',
     top: height * 0.460269865067466,
-    // marginTop: height * 0.03082,
     marginLeft: width * 0.1066,
+    maxHeight: utils.scale({
+      origin_size: 887,
+      destination_size: height,
+      size: 372,
+    }),
+  },
+  separator: {
+    width: '100%',
+    height: utils.scale({
+      origin_size: 887,
+      destination_size: height,
+      size: 21,
+    }),
   },
   rounded_button: {
     backgroundColor: '#3E2AD1',

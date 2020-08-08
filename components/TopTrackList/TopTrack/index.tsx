@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Dimensions, Image, Text } from 'react-native';
 import * as utils from '../../../utils';
+
 const { width, height } = Dimensions.get('screen');
 
 const styles = StyleSheet.create({
@@ -18,31 +19,26 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 3,
   },
-  image_wrapper: {
-    height: utils.scale({
-      origin_size: 375,
-      destination_size: width,
-      size: 54.41,
-    }),
-    width: utils.scale({
-      origin_size: 375,
-      destination_size: width,
-      size: 54.41,
-    }),
-    marginRight: width * 0.0340266,
+  wrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   image: {
-    height: utils.scale({
+    marginRight: utils.scale({
       origin_size: 375,
       destination_size: width,
-      size: 54.41,
+      size: 12.76,
+    }),
+    height: utils.scale({
+      origin_size: 811,
+      destination_size: height,
+      size: 65,
     }),
     width: utils.scale({
-      origin_size: 375,
-      destination_size: width,
-      size: 54.41,
+      origin_size: 811,
+      destination_size: height,
+      size: 65,
     }),
   },
   description: {},
@@ -62,20 +58,26 @@ const styles = StyleSheet.create({
     }),
     color: '#545663',
   },
-  time: {},
+  time: {
+    fontSize: utils.scale({
+      origin_size: 811,
+      destination_size: height,
+      size: 12,
+    }),
+    color: '#545663',
+  },
 });
 
 const TopTrack: React.FC = () => {
   return (
     <View style={styles.container}>
-      <View>
-        <View style={styles.image_wrapper}>
-          <Image
-            resizeMode="stretch"
-            style={styles.image}
-            source={require('../../../assets/covers/closer.png')}
-          />
-        </View>
+      <View style={styles.wrapper}>
+        <Image
+          resizeMode="stretch"
+          style={[styles.image]}
+          source={require('../../../assets/covers/closer.png')}
+        />
+
         <View style={styles.description}>
           <Text style={styles.album}>Closer (feat. Halsey)</Text>
           <Text style={styles.track}>The Chainsmokers feat. Halsey</Text>
