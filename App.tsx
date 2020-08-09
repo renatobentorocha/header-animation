@@ -1,7 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Dimensions, View, FlatList } from 'react-native';
+import React, { useRef } from 'react';
+import {
+  StyleSheet,
+  Dimensions,
+  View,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+} from 'react-native';
 import Svg, { Path } from 'react-native-svg';
+
+import { FlatList } from 'react-native-gesture-handler';
+
+import Animated, { event, Value, sub } from 'react-native-reanimated';
 
 import * as utils from './utils';
 
@@ -13,6 +23,8 @@ import Radio from './Radio';
 import Bell from './Bell';
 import FeaturedTrackList from './components/FeaturedTrackList';
 import TopTrackList from './components/TopTrackList';
+
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 const { height, width } = Dimensions.get('screen');
 
@@ -51,21 +63,39 @@ const d = `
     Z`;
 
 const DATA = [() => <FeaturedTrackList />, () => <TopTrackList />];
+
 export default function App() {
+  const translateY = useRef(new Value<number>(0)).current;
+  const onScroll = event<NativeSyntheticEvent<NativeScrollEvent>>([
+    {
+      nativeEvent: { contentOffset: { y: translateY } },
+    },
+  ]);
+
+  const topFeaturedList = utils.scale({
+    origin_size: 811,
+    destination_size: height,
+    size: 375,
+  });
+
+  const animatedTopFeaturedList = sub(topFeaturedList, translateY);
+
   return (
     <View style={styles.container}>
-      <Trending />
+      <Trending translateY={translateY} />
 
-      <FlatList
+      <AnimatedFlatList
+        onScroll={onScroll}
+        scrollEventThrottle={1}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          paddingVertical: utils.scale({
-            origin_size: 887,
-            destination_size: height,
-            size: 36,
-          }),
-        }}
-        style={styles.featured_track_list}
+        // contentContainerStyle={{
+        //   paddingVertical: utils.scale({
+        //     origin_size: 887,
+        //     destination_size: height,
+        //     size: 36,
+        //   }),
+        // }}
+        style={[styles.featured_track_list, { top: topFeaturedList }]}
         data={DATA}
         renderItem={({ item }) => item()}
         keyExtractor={(_, index) => `${index}`}
@@ -132,12 +162,11 @@ const styles = StyleSheet.create({
   },
   featured_track_list: {
     position: 'absolute',
-    top: height * 0.460269865067466,
     marginLeft: width * 0.1066,
     maxHeight: utils.scale({
-      origin_size: 887,
+      origin_size: 811,
       destination_size: height,
-      size: 372,
+      size: 352,
     }),
   },
   separator: {

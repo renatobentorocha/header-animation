@@ -9,6 +9,12 @@ import {
 } from 'react-native';
 import PlayButton from '../PlayButton';
 import ShareButton from '../ShareButton';
+import * as utils from '../../utils';
+import Animated, { debug, useCode, sub } from 'react-native-reanimated';
+
+const AnimatedImageBackground = Animated.createAnimatedComponent(
+  ImageBackground
+);
 
 const { height, width } = Dimensions.get('window');
 
@@ -16,11 +22,9 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     top: 0,
-    height: height * 0.460269865067466,
     width,
   },
   image: {
-    height: height * 0.460269865067466,
     width,
   },
   hero_content: {
@@ -56,15 +60,29 @@ const styles = StyleSheet.create({
   },
 });
 
-const Trending: React.FC = () => {
+type Props = {
+  translateY: Animated.Value<number>;
+};
+
+const Trending: React.FC<Props> = ({ translateY }) => {
+  useCode(() => debug('translateY', translateY), []);
+
+  const headerHeight = utils.scale({
+    origin_size: 811,
+    destination_size: height,
+    size: 373.278860569714975,
+  });
+
+  const animatedHeaderHeight = sub(headerHeight, translateY);
+
   return (
-    <View style={styles.container}>
-      <ImageBackground
+    <Animated.View style={[styles.container, { height: animatedHeaderHeight }]}>
+      <AnimatedImageBackground
         resizeMode="cover"
         source={require('../../assets/trending.png')}
-        style={styles.image}
+        style={[styles.image, { height: animatedHeaderHeight }]}
       >
-        <View style={styles.hero_content}>
+        <Animated.View style={[styles.hero_content]}>
           <Image
             resizeMode="contain"
             source={require('../../assets/Menu.png')}
@@ -80,9 +98,9 @@ const Trending: React.FC = () => {
             <PlayButton />
             <ShareButton />
           </View>
-        </View>
-      </ImageBackground>
-    </View>
+        </Animated.View>
+      </AnimatedImageBackground>
+    </Animated.View>
   );
 };
 
