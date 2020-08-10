@@ -81,21 +81,21 @@ export default function App() {
   const animatedTopFeaturedList = sub(topFeaturedList, translateY);
 
   return (
-    <View style={styles.container}>
+    <Animated.View style={styles.container}>
       <Trending translateY={translateY} />
 
       <AnimatedFlatList
         onScroll={onScroll}
         scrollEventThrottle={1}
         showsVerticalScrollIndicator={false}
-        // contentContainerStyle={{
-        //   paddingVertical: utils.scale({
-        //     origin_size: 887,
-        //     destination_size: height,
-        //     size: 36,
-        //   }),
-        // }}
-        style={[styles.featured_track_list, { top: topFeaturedList }]}
+        contentContainerStyle={{
+          paddingVertical: utils.scale({
+            origin_size: 887,
+            destination_size: height,
+            size: 36,
+          }),
+        }}
+        style={[styles.featured_track_list, { top: animatedTopFeaturedList }]}
         data={DATA}
         renderItem={({ item }) => item()}
         keyExtractor={(_, index) => `${index}`}
@@ -149,7 +149,7 @@ export default function App() {
       </View>
 
       <StatusBar style="light" />
-    </View>
+    </Animated.View>
   );
 }
 

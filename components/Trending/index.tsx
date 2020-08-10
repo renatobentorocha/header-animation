@@ -10,7 +10,13 @@ import {
 import PlayButton from '../PlayButton';
 import ShareButton from '../ShareButton';
 import * as utils from '../../utils';
-import Animated, { debug, useCode, sub } from 'react-native-reanimated';
+import Animated, {
+  debug,
+  useCode,
+  sub,
+  interpolate,
+  Extrapolate,
+} from 'react-native-reanimated';
 
 const AnimatedImageBackground = Animated.createAnimatedComponent(
   ImageBackground
@@ -64,9 +70,7 @@ type Props = {
   translateY: Animated.Value<number>;
 };
 
-const Trending: React.FC<Props> = ({ translateY }) => {
-  useCode(() => debug('translateY', translateY), []);
-
+const Trending: React.FC<Props> = ({ translateY }: Props) => {
   const headerHeight = utils.scale({
     origin_size: 811,
     destination_size: height,
@@ -74,6 +78,70 @@ const Trending: React.FC<Props> = ({ translateY }) => {
   });
 
   const animatedHeaderHeight = sub(headerHeight, translateY);
+
+  const opacityPlay = interpolate(translateY, {
+    inputRange: [
+      0,
+      utils.scale({
+        origin_size: 811,
+        destination_size: height,
+        size: 25,
+      }),
+    ],
+    outputRange: [1, 0],
+    extrapolate: Extrapolate.CLAMP,
+  });
+
+  const opacityArtist = interpolate(translateY, {
+    inputRange: [
+      utils.scale({
+        origin_size: 811,
+        destination_size: height,
+        size: 46,
+      }),
+      utils.scale({
+        origin_size: 811,
+        destination_size: height,
+        size: 117,
+      }),
+    ],
+    outputRange: [1, 0],
+    extrapolate: Extrapolate.CLAMP,
+  });
+
+  const opacityMusic = interpolate(translateY, {
+    inputRange: [
+      utils.scale({
+        origin_size: 811,
+        destination_size: height,
+        size: 99,
+      }),
+      utils.scale({
+        origin_size: 811,
+        destination_size: height,
+        size: 171,
+      }),
+    ],
+    outputRange: [1, 0],
+    extrapolate: Extrapolate.CLAMP,
+  });
+
+  const opacityTrending = interpolate(translateY, {
+    inputRange: [
+      utils.scale({
+        origin_size: 811,
+        destination_size: height,
+        size: 175,
+      }),
+      utils.scale({
+        origin_size: 811,
+        destination_size: height,
+        size: 205,
+      }),
+    ],
+    outputRange: [1, 0],
+    extrapolate: Extrapolate.CLAMP,
+  });
 
   return (
     <Animated.View style={[styles.container, { height: animatedHeaderHeight }]}>
@@ -83,21 +151,28 @@ const Trending: React.FC<Props> = ({ translateY }) => {
         style={[styles.image, { height: animatedHeaderHeight }]}
       >
         <Animated.View style={[styles.hero_content]}>
-          <Image
+          <Animated.Image
             resizeMode="contain"
             source={require('../../assets/Menu.png')}
-            style={styles.button_menu}
+            style={[styles.button_menu, {}]}
           />
 
-          <Text style={styles.trending}>{`// TRENDING`}</Text>
-          <Text style={styles.music_name} numberOfLines={2}>
+          <Animated.Text
+            style={[styles.trending, { opacity: opacityTrending }]}
+          >{`// TRENDING`}</Animated.Text>
+          <Animated.Text
+            style={[styles.music_name, { opacity: opacityMusic }]}
+            numberOfLines={2}
+          >
             Akcent feat Lidia Buble...
-          </Text>
-          <Text style={styles.artist}>- Kamelia </Text>
-          <View style={styles.actions}>
+          </Animated.Text>
+          <Animated.Text style={[styles.artist, { opacity: opacityArtist }]}>
+            - Kamelia{' '}
+          </Animated.Text>
+          <Animated.View style={[styles.actions, { opacity: opacityPlay }]}>
             <PlayButton />
             <ShareButton />
-          </View>
+          </Animated.View>
         </Animated.View>
       </AnimatedImageBackground>
     </Animated.View>

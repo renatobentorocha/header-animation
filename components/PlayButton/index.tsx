@@ -1,19 +1,20 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { Text, StyleSheet, Dimensions } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Animated from 'react-native-reanimated';
 
 const { height, width } = Dimensions.get('window');
 
 const PlayButton: React.FC = () => {
   return (
-    <View style={styles.container}>
+    <Animated.View style={styles.container}>
       <Text style={styles.play_text}>PLAY</Text>
       <MaterialCommunityIcons
         name="play-outline"
         size={height * 0.0224887}
         color="#E6152B"
       />
-    </View>
+    </Animated.View>
   );
 };
 
