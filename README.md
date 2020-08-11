@@ -18,10 +18,10 @@
 # Configure expo (https://expo.io)
 
 # Clone this repository
-$ git clone https://github.com/renatobentorocha/tabbar.git TabBar
+$ git clone https://github.com/renatobentorocha/header-animation.git HeaderAnimation
 
 # Go into the repository
-$ cd LoadingWithSvg
+$ cd HeaderAnimation
 
 # Install dependencies
 $ yarn
